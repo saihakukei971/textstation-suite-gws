@@ -1,0 +1,35 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "styleRules",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "isActive", "order": "ASCENDING" },
+        { "fieldPath": "mediaTypes", "arrayConfig": "CONTAINS" }
+      ]
+    },
+    {
+      "collectionGroup": "snippets",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "isShared", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "logs",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "timestamp", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "backups",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "timestamp", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

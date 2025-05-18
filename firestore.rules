@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // スニペット関連のルール
+    match /snippets/{snippet} {
+      // 認証済みユーザーのみ読み書き可能
+      allow read: if request.auth != null;
+      
+      // 個人用スニペットは本人のみ書き込み可能
+      allow write: if request.auth != null && 
+                     (resource == null || !resource.data.isShared || request.auth.token.email == resource.data.author);
+    }
+    
+    // スタイルルール関連のルール
+    match /styleRules/{rule} {
+      // 読み取りは誰でも可能
+      allow read: if true;
+      
+      // 書き込みは管理者のみ（実運用時はより詳細に設定）
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // ログ関連のルール
+    match /logs/{log} {
+      // 読み書きは認証済みユーザーのみ
+      allow read, write: if request.auth != null;
+    }
+    
+    // バックアップ関連のルール
+    match /backups/{backup} {
+      // 読み書きは認証済みユーザーのみ
+      allow read, write: if request.auth != null;
+    }
+  }
+}
